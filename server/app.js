@@ -23,9 +23,13 @@ const Databse = async () => {
   const result = await DatabaseModel.insertMany([Data1, Data2]);
   console.log(result);
 };
-Databse();
+// Databse();
+app.use(require("./Router/auth.js"))
+
 app.get("/", (req, res) => {
   res.end("Hello this is  Home Section ");
 });
-
+app.get("/about", (req, res) => {
+  res.end("this is About Page");
+});
 app.listen(PORT, () => [console.log("Listening in port no: 8000")]);
