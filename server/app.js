@@ -2,30 +2,25 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const DatabaseModel = require("./ModelSchemas/Schemas.js");
 
 dotenv.config({ path: "./Config/config.env" });
 const DB = process.env.DATABASE;
-const PORT=process.env.PORT;
-mongoose
-  .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(console.log("Connection Successfully"))
-  .catch((err) => console.log(err));
-const Schema = new mongoose.Schema({
-  name: String,
-  work: Boolean,
-});
-const Employe = new mongoose.model("detail", Schema);
+const PORT = process.env.PORT;
+
+require("./db/connection.js");
+
 const Databse = async () => {
-  const Data1 = new Employe({
-    name: "Sandeep Painrka",
+  const Data1 = new DatabaseModel({
+    name: "Rahul singh",
     work: true,
   });
-  const Data2 = new Employe({
-    name: "Raju",
+  const Data2 = new DatabaseModel({
+    name: "Mahendra Painkra",
     work: false,
   });
 
-  const result = await Employe.insertMany([Data1, Data2]);
+  const result = await DatabaseModel.insertMany([Data1, Data2]);
   console.log(result);
 };
 Databse();
@@ -33,4 +28,4 @@ app.get("/", (req, res) => {
   res.end("Hello this is  Home Section ");
 });
 
-app.listen(8000, () => [console.log("Listening in port no: 8000")]);
+app.listen(PORT, () => [console.log("Listening in port no: 8000")]);
